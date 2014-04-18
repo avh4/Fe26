@@ -381,9 +381,21 @@ hr {
     color: #f9f6f2;
     background: #edc337; }
   .tile.tile-234Thorium .tile-inner {
-    background-color: #444444; }
+    background-color: #222; }
   .tile.tile-238Uranium .tile-inner {
-    background-color: #333333; }
+    background-color: #111; }
+  .tile.tile-234Uranium .tile-inner {
+    background-color: #111; }
+  .tile.tile-230Thorium .tile-inner {
+    background-color: #222; }
+  .tile.tile-226Radium .tile-inner {
+    background-color: #333; }
+  .tile.tile-222Radon .tile-inner {
+    background-color: #444; }
+  .tile.tile-218Polonium .tile-inner {
+    background-color: #555; }
+  .tile.tile-214Lead .tile-inner {
+    background-color: #666; }
 
 @-webkit-keyframes appear {
   0% {

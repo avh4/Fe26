@@ -95,17 +95,13 @@ GameManager.prototype.addRandomTile = function () {
   if (this.grid.cellsAvailable()) {
     var value;
     if (this.wentSupernova) {
-      value = Math.random() < 0.9 ? "238Uranium" : "238Uranium";
+      value = Math.random() < 0.9 ? "234Uranium" : "238Uranium";
     } else {
       value = Math.random() < 0.9 ? "Hydrogen" : "Deuteron";
     }
     var tile = new Tile(this.grid.randomAvailableCell(), value, this.labels[value]);
 
-    var decay = this.decay[value] || false;
-
-    if(decay !== false) {
-      tile.movesLeft = Math.floor(Math.random() * (Math.ceil(8*decay['multipler']) - Math.ceil(4*decay['multipler']) + 1)) + Math.ceil(4*decay['multipler']);
-    }
+    this.initDecay(tile);
 
     this.grid.insertTile(tile);
   }
@@ -199,11 +195,7 @@ GameManager.prototype.move = function (direction) {
             var merged = new Tile(positions.next, fusionValue, self.labels[fusionValue]);
             merged.mergedFrom = [tile, next];
 
-            var decay = self.decay[fusionValue] || false;
-
-            if(decay !== false) {
-              merged.movesLeft = Math.floor(Math.random() * (Math.ceil(8*decay['multipler']) - Math.ceil(4*decay['multipler']) + 1)) + Math.ceil(4*decay['multipler']);
-            }
+            self.initDecay(merged);
 
             self.grid.insertTile(merged);
             self.grid.removeTile(tile);
@@ -240,6 +232,7 @@ GameManager.prototype.move = function (direction) {
           y: tile.y
         }, decayValue, self.labels[decayValue]);
         self.grid.removeTile(tile);
+        self.initDecay(decayed);
         self.grid.insertTile(decayed);
 
         self.score += self.decay[tile.value].points;
@@ -255,6 +248,15 @@ GameManager.prototype.move = function (direction) {
     this.actuate();
   }
 };
+
+GameManager.prototype.initDecay = function (tile) {
+  var fusionValue = tile.value;
+  var decay = this.decay[fusionValue] || false;
+
+  if(decay !== false) {
+    tile.movesLeft = Math.floor(Math.random() * (Math.ceil(8*decay['multipler']) - Math.ceil(4*decay['multipler']) + 1)) + Math.ceil(4*decay['multipler']);
+  }
+}
 
 // Get the vector representing the chosen direction
 GameManager.prototype.getVector = function (direction) {
@@ -401,7 +403,13 @@ GameManager.prototype.labels = {
   "56Nickel": "<sup>56</sup>Nickel",
   "56Iron": "<sup>56</sup>Iron",
   "234Thorium": "<sup>234</sup>Thorium",
-  "238Uranium": "<sup>238</sup>Uranium"
+  "238Uranium": "<sup>238</sup>Uranium",
+  "234Uranium": "<sup>234</sup>Uranium",
+  "230Thorium": "<sup>230</sup>Thorium",
+  "226Radium": "<sup>226</sup>Radium",
+  "222Radon": "<sup>222</sup>Radon",
+  "218Polonium": "<sup>218</sup>Polonium",
+  "214Lead": "<sup>214</sup>Lead"
 };
 
 GameManager.prototype.pointValues = {
@@ -424,7 +432,13 @@ GameManager.prototype.pointValues = {
   "56Nickel":28,
   "56Iron":56,
   "234Thorium":234,
-  "238Uranium":238
+  "238Uranium":238,
+  "234Uranium":234,
+  "230Thorium":230,
+  "226Radium":226,
+  "222Radon":222,
+  "218Polonium":218,
+  "214Lead":214
 };
 
 GameManager.prototype.decay = {
@@ -456,6 +470,31 @@ GameManager.prototype.decay = {
   "238Uranium": {
     "multipler": "2",
     "to": "234Thorium",
+    "points": 238
+  },
+  "234Uranium": {
+    "multipler": "0.2",
+    "to": "230Thorium",
+    "points": 238
+  },
+  "230Thorium": {
+    "multipler": "0.2",
+    "to": "226Radium",
+    "points": 238
+  },
+  "226Radium": {
+    "multipler": "0.2",
+    "to": "222Radon",
+    "points": 238
+  },
+  "222Radon": {
+    "multipler": "0.2",
+    "to": "218Polonium",
+    "points": 238
+  },
+  "218Polonium": {
+    "multipler": "0.2",
+    "to": "214Lead",
     "points": 238
   }
 };

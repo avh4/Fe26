@@ -403,10 +403,28 @@ hr {
     @include tile-bg-color(18);
   }
   &.tile-234Thorium .tile-inner {
-    background-color: #444444;
+    background-color: #222;
   }
   &.tile-238Uranium .tile-inner {
-    background-color: #333333;
+    background-color: #111;
+  }
+  &.tile-234Uranium .tile-inner {
+    background-color: #111;
+  }
+  &.tile-230Thorium .tile-inner {
+    background-color: #222;
+  }
+  &.tile-226Radium .tile-inner {
+    background-color: #333;
+  }
+  &.tile-222Radon .tile-inner {
+    background-color: #444;
+  }
+  &.tile-218Polonium .tile-inner {
+    background-color: #555;
+  }
+  &.tile-214Lead .tile-inner {
+    background-color: #666;
   }
 }
 
