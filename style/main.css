@@ -380,6 +380,10 @@ hr {
   .tile.tile-56Iron .tile-inner {
     color: #f9f6f2;
     background: #edc337; }
+  .tile.tile-90Thorium .tile-inner {
+    background-color: #444444; }
+  .tile.tile-92Uranium .tile-inner {
+    background-color: #333333; }
 
 @-webkit-keyframes appear {
   0% {
@@ -488,6 +492,21 @@ hr {
   float: left;
   line-height: 42px;
   margin-bottom: 0; }
+
+.supernova-button {
+  display: inline-block;
+  background: #004742;
+  border-radius: 3px;
+  padding: 0 20px;
+  text-decoration: none;
+  color: #f9f6f2;
+  height: 40px;
+  line-height: 42px;
+  display: block;
+  text-align: center;
+  float: right;
+  background-color: #ff3333;
+  margin-left: 0.75em; }
 
 .restart-button {
   display: inline-block;

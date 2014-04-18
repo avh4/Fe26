@@ -14,6 +14,7 @@ function GameManager(size, InputManager, Actuator, StorageManager) {
   this.inputManager.on("move", this.move.bind(this));
   this.inputManager.on("restart", this.restart.bind(this));
   this.inputManager.on("keepPlaying", this.keepPlaying.bind(this));
+  this.inputManager.on("goSupernova", this.goSupernova.bind(this));
 
   this.setup();
 	return this;
@@ -31,6 +32,12 @@ GameManager.prototype.keepPlaying = function () {
   this.keepPlaying = true;
   this.actuator.continueGame(); // Clear the game won/lost message
 };
+
+GameManager.prototype.goSupernova = function () {
+  this.wentSupernova = true;
+  this.addSupernovaTiles();
+  this.actuate();
+}
 
 // Return true if the game is lost, or has won and the user hasn't kept playing
 GameManager.prototype.isGameTerminated = function () {
@@ -53,12 +60,14 @@ GameManager.prototype.setup = function () {
     this.over        = previousState.over;
     this.won         = previousState.won;
     this.keepPlaying = previousState.keepPlaying;
+    this.wentSupernova = previousState.wentSupernova;
   } else {
     this.grid        = new Grid(this.size);
     this.score       = 0;
     this.over        = false;
     this.won         = false;
     this.keepPlaying = false;
+    this.wentSupernova = false;
 
     // Add the initial tiles
     this.addStartTiles();
@@ -75,11 +84,28 @@ GameManager.prototype.addStartTiles = function () {
   }
 };
 
+GameManager.prototype.addSupernovaTiles = function () {
+  for (var i = 0; i < 1; i++) {
+    this.addRandomTile();
+  }
+};
+
 // Adds a tile in a random position
 GameManager.prototype.addRandomTile = function () {
   if (this.grid.cellsAvailable()) {
-    var value = Math.random() < 0.9 ? "Hydrogen" : "Deuteron";
+    var value;
+    if (this.wentSupernova) {
+      value = Math.random() < 0.9 ? "92Uranium" : "92Uranium";
+    } else {
+      value = Math.random() < 0.9 ? "Hydrogen" : "Deuteron";
+    }
     var tile = new Tile(this.grid.randomAvailableCell(), value, this.labels[value]);
+
+    var decay = this.decay[value] || false;
+
+    if(decay !== false) {
+      tile.movesLeft = Math.floor(Math.random() * (Math.ceil(8*decay['multipler']) - Math.ceil(4*decay['multipler']) + 1)) + Math.ceil(4*decay['multipler']);
+    }
 
     this.grid.insertTile(tile);
   }
@@ -115,7 +141,8 @@ GameManager.prototype.serialize = function () {
     score:       this.score,
     over:        this.over,
     won:         this.won,
-    keepPlaying: this.keepPlaying
+    keepPlaying: this.keepPlaying,
+    wentSupernova: this.wentSupernova
   };
 };
 
@@ -372,7 +399,9 @@ GameManager.prototype.labels = {
   "48Chromium": "<sup>48</sup>Chromium",
   "52Iron": "<sup>52</sup>Iron",
   "56Nickel": "<sup>56</sup>Nickel",
-  "56Iron": "<sup>56</sup>Iron"
+  "56Iron": "<sup>56</sup>Iron",
+  "90Thorium": "<sup>90</sup>Thorium",
+  "92Uranium": "<sup>92</sup>Uranium"
 };
 
 GameManager.prototype.pointValues = {
@@ -393,7 +422,9 @@ GameManager.prototype.pointValues = {
   "48Chromium":24,
   "52Iron":26,
   "56Nickel":28,
-  "56Iron":56
+  "56Iron":56,
+  "90Thorium":90,
+  "92Uranium":92
 };
 
 GameManager.prototype.decay = {
@@ -421,5 +452,10 @@ GameManager.prototype.decay = {
     "multipler": "1.5",
     "to": "56Iron",
 		"points": 56
+  },
+  "92Uranium": {
+    "multipler": "3",
+    "to": "90Thorium",
+    "points": 92
   }
 };

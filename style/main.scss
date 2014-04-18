@@ -402,6 +402,12 @@ hr {
   &.tile-56Iron .tile-inner {
     @include tile-bg-color(18);
   }
+  &.tile-90Thorium .tile-inner {
+    background-color: #444444;
+  }
+  &.tile-92Uranium .tile-inner {
+    background-color: #333333;
+  }
 }
 
 @include keyframes(appear) {
@@ -449,6 +455,15 @@ hr {
   float: left;
   line-height: 42px;
   margin-bottom: 0;
+}
+
+.supernova-button {
+  @include button;
+  display: block;
+  text-align: center;
+  float: right;
+  background-color: #ff3333;
+  margin-left: 0.75em;
 }
 
 .restart-button {
