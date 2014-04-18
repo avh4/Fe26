@@ -454,7 +454,7 @@ GameManager.prototype.decay = {
 		"points": 56
   },
   "92Uranium": {
-    "multipler": "3",
+    "multipler": "2",
     "to": "90Thorium",
     "points": 92
   }
