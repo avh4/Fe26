@@ -402,10 +402,10 @@ hr {
   &.tile-56Iron .tile-inner {
     @include tile-bg-color(18);
   }
-  &.tile-90Thorium .tile-inner {
+  &.tile-234Thorium .tile-inner {
     background-color: #444444;
   }
-  &.tile-92Uranium .tile-inner {
+  &.tile-238Uranium .tile-inner {
     background-color: #333333;
   }
 }

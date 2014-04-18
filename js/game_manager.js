@@ -95,7 +95,7 @@ GameManager.prototype.addRandomTile = function () {
   if (this.grid.cellsAvailable()) {
     var value;
     if (this.wentSupernova) {
-      value = Math.random() < 0.9 ? "92Uranium" : "92Uranium";
+      value = Math.random() < 0.9 ? "238Uranium" : "238Uranium";
     } else {
       value = Math.random() < 0.9 ? "Hydrogen" : "Deuteron";
     }
@@ -400,8 +400,8 @@ GameManager.prototype.labels = {
   "52Iron": "<sup>52</sup>Iron",
   "56Nickel": "<sup>56</sup>Nickel",
   "56Iron": "<sup>56</sup>Iron",
-  "90Thorium": "<sup>90</sup>Thorium",
-  "92Uranium": "<sup>92</sup>Uranium"
+  "234Thorium": "<sup>234</sup>Thorium",
+  "238Uranium": "<sup>238</sup>Uranium"
 };
 
 GameManager.prototype.pointValues = {
@@ -423,8 +423,8 @@ GameManager.prototype.pointValues = {
   "52Iron":26,
   "56Nickel":28,
   "56Iron":56,
-  "90Thorium":90,
-  "92Uranium":92
+  "234Thorium":234,
+  "238Uranium":238
 };
 
 GameManager.prototype.decay = {
@@ -453,9 +453,9 @@ GameManager.prototype.decay = {
     "to": "56Iron",
 		"points": 56
   },
-  "92Uranium": {
+  "238Uranium": {
     "multipler": "2",
-    "to": "90Thorium",
-    "points": 92
+    "to": "234Thorium",
+    "points": 238
   }
 };
